@@ -1,0 +1,27 @@
+---
+- name: Criacao de usuarios
+  hosts: all
+  remote_user: root
+  tasks:
+
+   - name: Criar os grupos
+     group:
+       name: "{{ item }}"
+       state: present
+     with_items:
+       - grupo1
+       - grupo2
+
+   - include_vars: usuarios.yml
+
+   - name: Criar usuarios com senha em HASH
+     user:
+        name: "{{ item.userid }}"
+        comment: "{{ item.comentario }}"
+        group: "{{ item.grupo }}"
+        password: $6$NfBXlWxf$UjOFaSryAjnodv7NXPZJfXFt06c5KwzIyRQdgsKetVeJ9lStsoFk32gBB5Fmjy6.DDZeBLn/aEczLMlQxECbg1
+     with_items: "{{ users }}"
+    
+   - name: Forcar a alteracao no primeiro login
+     shell: "chage -d 0 {{ item.userid }}"
+     with_items: "{{ users }}"
