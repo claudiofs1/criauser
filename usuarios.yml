@@ -1,0 +1,9 @@
+---
+users:
+  - userid: user1
+    comentario: Usuario 1
+    grupo: grupo1
+ 
+    - userid: user2
+      comentario: Usuario 2
+      grupo: grupo2
